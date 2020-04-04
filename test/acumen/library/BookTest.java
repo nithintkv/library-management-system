@@ -6,12 +6,11 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class BookTest {
-    private BookDetail bookDetail;
     private Book book;
 
     @BeforeEach
     void createObjects() {
-        bookDetail = new BookDetail("Name", "Author", "Subject");
+        BookDetail bookDetail = new BookDetail("Name", "Author", "Subject");
         book = new Book(bookDetail, "uid");
     }
 
@@ -21,14 +20,31 @@ class BookTest {
     }
 
     @Test
-    void shouldNotBeAvailable() {
+    void shouldNotBeAvailableIfCheckedOut() {
         book.setStatus(BookStatus.CHECKED_OUT);
+
         assertFalse(book.isAvailable());
     }
 
     @Test
     void shouldNotBeAvailableIfReserved() {
         book.setStatus(BookStatus.RESERVED);
+
         assertFalse(book.isAvailable());
+    }
+
+    @Test
+    void shouldGetBookName() {
+        assertEquals("Name", book.getName());
+    }
+
+    @Test
+    void shouldGetAuthorName() {
+        assertEquals("Author", book.getAuthor());
+    }
+
+    @Test
+    void shouldGetUID() {
+        assertEquals("uid", book.getUid());
     }
 }

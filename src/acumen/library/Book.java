@@ -18,4 +18,16 @@ public class Book {
     public void setStatus(BookStatus status) {
         this.status = status;
     }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public String getAuthor() {
+        return bookDetail.getAuthor();
+    }
+
+    public String getName() {
+        return bookDetail.getName();
+    }
 }
