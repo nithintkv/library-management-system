@@ -33,13 +33,13 @@ public class LibraryRepository implements Repository {
 
     @Override
     public void addBook(Book book) {
-        List<Book> books = searchByName(book.getName());
+        List<Book> books = searchByName(book.getBookDetail().getName());
         books.add(book);
-        bookNames.put(book.getName(), books);
+        bookNames.put(book.getBookDetail().getName(), books);
 
-        books = searchByAuthor(book.getAuthor());
+        books = searchByAuthor(book.getBookDetail().getAuthor());
         books.add(book);
-        bookAuthors.put(book.getAuthor(), books);
+        bookAuthors.put(book.getBookDetail().getAuthor(), books);
 
         bookUids.put(book.getUid(), book);
     }

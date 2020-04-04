@@ -4,6 +4,8 @@ public class Book {
     private BookDetail bookDetail;
     private String uid;
     private BookStatus status;
+    private Member borrower;
+    private Member reserver;
 
     public Book(BookDetail bookDetail, String uid) {
         this.bookDetail = bookDetail;
@@ -19,15 +21,31 @@ public class Book {
         this.status = status;
     }
 
+    public BookStatus getStatus() {
+        return status;
+    }
+
     public String getUid() {
         return uid;
     }
 
-    public String getAuthor() {
-        return bookDetail.getAuthor();
+    public BookDetail getBookDetail() {
+        return bookDetail;
     }
 
-    public String getName() {
-        return bookDetail.getName();
+    public void loanedBy(Member member) {
+        borrower = member;
+    }
+
+    public Member getBorrower() {
+        return borrower;
+    }
+
+    public void reservedBy(Member member) {
+        reserver = member;
+    }
+
+    public Member getReserver() {
+        return reserver;
     }
 }

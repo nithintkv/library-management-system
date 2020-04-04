@@ -34,13 +34,29 @@ class BookTest {
     }
 
     @Test
+    void shouldBeLoanedByMember() {
+        Member member = new Member("Name", "username", "Address", "email");
+        book.loanedBy(member);
+
+        assertEquals(member, book.getBorrower());
+    }
+
+    @Test
+    void shouldBeReservedByMember() {
+        Member member = new Member("Name", "username", "Address", "email");
+        book.reservedBy(member);
+
+        assertEquals(member, book.getReserver());
+    }
+
+    @Test
     void shouldGetBookName() {
-        assertEquals("Name", book.getName());
+        assertEquals("Name", book.getBookDetail().getName());
     }
 
     @Test
     void shouldGetAuthorName() {
-        assertEquals("Author", book.getAuthor());
+        assertEquals("Author", book.getBookDetail().getAuthor());
     }
 
     @Test

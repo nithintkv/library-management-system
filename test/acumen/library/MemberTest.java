@@ -3,9 +3,10 @@ package acumen.library;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.Set;
+import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class MemberTest {
     private Member member;
@@ -25,53 +26,34 @@ class MemberTest {
     }
 
     @Test
-    void shouldNotReserveNewBookIfNotCheckedOut() {
-        assertFalse(member.reserve(book));
+    void shouldAddToReservedBooks() {
+        member.addReservedBooks(book);
+
+        assertEquals(List.of(book), member.getReservedBooks());
     }
 
     @Test
-    void shouldReserveBookIfCheckedOut() {
-        book.setStatus(BookStatus.CHECKED_OUT);
-        assertTrue(member.reserve(book));
+    void shouldAddToCheckedOutBooks() {
+        member.addCheckedOutBooks(book);
+
+        assertEquals(List.of(book), member.getCheckedOutBooks());
     }
 
     @Test
-    void shouldGetReservedBooks() {
-        book.setStatus(BookStatus.CHECKED_OUT);
-        member.reserve(book);
+    void shouldRemoveFromCheckedOutBooks() {
+        member.addCheckedOutBooks(book);
+        assertEquals(List.of(book), member.getCheckedOutBooks());
 
-        assertEquals(Set.of(book), member.getReservedBooks());
+        member.removeCheckedOutBook(book);
+        assertEquals(List.of(), member.getCheckedOutBooks());
     }
 
     @Test
-    void shouldNotReserveNewBookIfLimitReached() {
-        Book book2 = new Book(bookDetail, "uid2");
-        Book book3 = new Book(bookDetail, "uid3");
-        Book book4 = new Book(bookDetail, "uid4");
-        Book book5 = new Book(bookDetail, "uid5");
-        Book book6 = new Book(bookDetail, "uid6");
-        book.setStatus(BookStatus.CHECKED_OUT);
-        book2.setStatus(BookStatus.CHECKED_OUT);
-        book3.setStatus(BookStatus.CHECKED_OUT);
-        book4.setStatus(BookStatus.CHECKED_OUT);
-        book5.setStatus(BookStatus.CHECKED_OUT);
-        book6.setStatus(BookStatus.CHECKED_OUT);
+    void shouldRemoveFromReservedBooks() {
+        member.addReservedBooks(book);
+        assertEquals(List.of(book), member.getReservedBooks());
 
-
-        assertTrue(member.reserve(book));
-        assertTrue(member.reserve(book2));
-        assertTrue(member.reserve(book3));
-        assertTrue(member.reserve(book4));
-        assertTrue(member.reserve(book5));
-        assertFalse(member.reserve(book6));
-    }
-
-    @Test
-    void shouldNotReserveSameBookMoreThanOnce() {
-        book.setStatus(BookStatus.CHECKED_OUT);
-        member.reserve(book);
-        member.reserve(book);
-
-        assertEquals(Set.of(book), member.getReservedBooks());
+        member.removeReservedBook(book);
+        assertEquals(List.of(), member.getReservedBooks());
     }
 }
